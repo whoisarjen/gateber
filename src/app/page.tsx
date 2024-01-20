@@ -32,6 +32,46 @@ const STEPS = [
   },
 ]
 
+type SectionProps = {
+  header: string
+  description: string
+  children?: React.ReactNode
+  isReversed?: boolean
+}
+
+const Section = ({
+  header,
+  description,
+  children,
+  isReversed,
+}: SectionProps) => {
+  return (
+    <section className={`flex gap-12 items-center flex-col xl:flex-row ${isReversed ? 'xl:flex-row-reverse' : ''}`}>
+      <div className="flex flex-1 flex-col box-border py-24 gap-4">
+        <h2 className="m-0">{header}</h2>
+        <p className="m-0">
+          {description}
+        </p>
+        {children &&
+          <div className="flex gap-4 box-border">
+            {children}
+          </div>
+        }
+      </div>
+      <div className="flex flex-1 h-full relative">
+        <Image
+          src="/images/talking-people.jpg"
+          fill
+          objectFit='cover'
+          alt={env.SITE_NAME}
+          className="rounded-lg"
+          objectPosition='top'
+        />
+      </div>
+    </section>
+  )
+}
+
 export default async function Home() {
   const session = await getServerAuthSession();
   const posts = await api.post.getPosts.query({});
@@ -41,32 +81,17 @@ export default async function Home() {
 
   return (
     <div className="flex flex-1 flex-col gap-12">
-      <section className="flex items-center flex-col xl:flex-row">
-        <div className="flex flex-1 flex-col box-border p-9">
-          <h2>Zmonetyzuj swoją wiedze</h2>
-          <p>
-            Witaj w {env.SITE_NAME} - miejscu, gdzie Twoja wiedza staje się źródłem zasłużonych dochodów. Teraz masz szansę przekształcić swoją pasję, umiejętności i treści w realne zarobki. Nasza platforma oferuje innowacyjne rozwiązania dla blogerów, twórców treści oraz stron sportowych, umożliwiając im maksymalizację potencjału finansowego.
-          </p>
-          <div className="flex gap-4 box-border my-3">
-            <ButtonPrimary href={signInOrDashboardHref}>
-              {signInText}
-            </ButtonPrimary>
-            <ButtonSecondary href="/blog">
-              Czytaj dalej
-            </ButtonSecondary>
-          </div>
-        </div>
-        <div className="flex flex-1 h-full relative">
-          <Image
-            src="/images/talking-people.jpg"
-            fill
-            objectFit='cover'
-            alt={env.SITE_NAME}
-            className="rounded-lg"
-            objectPosition='top'
-          />
-        </div>
-      </section>
+      <Section
+        header="Zmonetyzuj swoją wiedze"
+        description={`Witaj w ${env.SITE_NAME} - miejscu, gdzie Twoja wiedza staje się źródłem zasłużonych dochodów. Teraz masz szansę przekształcić swoją pasję, umiejętności i treści w realne zarobki. Nasza platforma oferuje innowacyjne rozwiązania dla blogerów, twórców treści oraz stron sportowych, umożliwiając im maksymalizację potencjału.`}
+      >
+        <ButtonPrimary href={signInOrDashboardHref}>
+          {signInText}
+        </ButtonPrimary>
+        <ButtonSecondary href="/blog">
+          Czytaj dalej
+        </ButtonSecondary>
+      </Section>
       <section className="flex flex-1 flex-col text-center">
         <h2 className="flex flex-1">Zobacz jakie to proste</h2>
         <div className="flex flex-1 gap-12 flex-col xl:flex-row">
@@ -85,29 +110,32 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <section className="flex items-center">
-        <div className="flex-1 h-full relative hidden lg:flex">
-          <Image
-            src="/images/talking-people.jpg"
-            fill
-            objectFit='cover'
-            alt={env.SITE_NAME}
-            className="rounded-lg"
-            objectPosition='top'
-          />
-        </div>
-        <div className="flex flex-1 flex-col box-border p-9">
-          <h2>Jesteśmy Tutaj, Żeby Ci Pomóc</h2>
-          <p>
-            Na {env.SITE_NAME} nie zostawiamy Cię samego. Naszym celem jest sprawić, aby korzystanie z platformy było jak najprostsze. Bez zbędnych komplikacji, bez niepotrzebnego zamieszania - po prostu twórz, buduj społeczność i zarabiaj. Jesteśmy tutaj, aby Ci to ułatwić.
-          </p>
-          <div className="flex box-border my-3">
-            <ButtonPrimary href={signInOrDashboardHref}>
-              {signInText}
-            </ButtonPrimary>
-          </div>
-        </div>
-      </section>
+      <Section
+        isReversed
+        header="Jesteśmy Tutaj, Żeby Ci Pomóc"
+        description={`Na ${env.SITE_NAME} nie zostawiamy Cię samego. Naszym celem jest sprawić, aby korzystanie z platformy było jak najprostsze. Bez zbędnych komplikacji, bez niepotrzebnego zamieszania - po prostu twórz, buduj społeczność i zarabiaj. Jesteśmy tutaj, aby Ci to ułatwić.`}
+      >
+        <ButtonPrimary href={signInOrDashboardHref}>
+          {signInText}
+        </ButtonPrimary>
+      </Section>
+      <Section
+        header="Przejrzyste Zasady, Zero Niespodzianek"
+        description={`${env.SITE_NAME} to miejsce, gdzie klarowność to priorytet. Cała nasza platforma jest dostępna dla Ciebie bez żadnych opłat - twórz, buduj społeczność, zarabiaj, wszystko bezpłatnie.`}
+      >
+        <ButtonPrimary href={signInOrDashboardHref}>
+          {signInText}
+        </ButtonPrimary>
+      </Section>
+      <Section
+        isReversed
+        header="Przejrzyste Zasady, Zero Niespodzianek"
+        description={`${env.SITE_NAME} to miejsce, gdzie klarowność to priorytet. Cała nasza platforma jest dostępna dla Ciebie bez żadnych opłat - twórz, buduj społeczność, zarabiaj, wszystko bezpłatnie.`}
+      >
+        <ButtonPrimary href={signInOrDashboardHref}>
+          {signInText}
+        </ButtonPrimary>
+      </Section>
       <section>
         <div className="flex justify-between items-center">
           <h2>Czerp Wiedze Od Innych</h2>
@@ -129,7 +157,7 @@ export default async function Home() {
                     objectPosition='top'
                   />
                 </div>
-                <h3 className="font-normal">{post.title}</h3>
+                <h3 className="text-base font-normal line-clamp-2">{post.title}</h3>
               </Link>
             ))}
           </div>
@@ -140,32 +168,9 @@ export default async function Home() {
                 href={getHrefToPost(post)}
                 className={`no-underline text-black flex lg:max-w-96 items-center ${index !== 0 ? 'border-solid border-x-0 border-b-0 border-t-[1px] border-tertiary' : ''}`}
               >
-                <h4 className="font-normal">{post.title}</h4>
+                <h3 className="text-base font-normal line-clamp-2">{post.title}</h3>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-      <section className="flex items-center">
-        <div className="flex-1 h-full relative hidden lg:flex">
-          <Image
-            src="/images/talking-people.jpg"
-            fill
-            objectFit='cover'
-            alt={env.SITE_NAME}
-            className="rounded-lg"
-            objectPosition='top'
-          />
-        </div>
-        <div className="flex flex-1 flex-col box-border p-9">
-          <h2>Przejrzyste Zasady, Zero Niespodzianek</h2>
-          <p>
-            {env.SITE_NAME} to miejsce, gdzie klarowność to priorytet. Cała nasza platforma jest dostępna dla Ciebie bez żadnych opłat - twórz, buduj społeczność, zarabiaj, wszystko bezpłatnie.
-          </p>
-          <div className="flex box-border my-3">
-            <ButtonPrimary href={signInOrDashboardHref}>
-              {signInText}
-            </ButtonPrimary>
           </div>
         </div>
       </section>

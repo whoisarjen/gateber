@@ -119,7 +119,7 @@ export const Editor = ({
       }
 
       updatePost.mutate(update)
-      customRevalidatePath('/edit/[postId]')
+      customRevalidatePath('/dashboard/edit/[postId]')
       customRevalidatePath(getHrefToPost(update))
       return
     }

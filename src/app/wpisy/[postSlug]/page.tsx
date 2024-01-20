@@ -18,7 +18,7 @@ export default async function Post({ params }: PostProps) {
 
     return (
         <article className="container mx-auto prose lg:prose-xl">
-            {session?.user.id === post.userId && <Link href={`/edit/${post.id}`}>Edytuj wpis</Link>}
+            {session?.user.id === post.userId && <Link href={`/dashboard/edit/${post.id}`}>Edytuj wpis</Link>}
             <h1>{post.title}</h1>
             <div className="flex gap-8 items-center">
                 {post.user.image &&

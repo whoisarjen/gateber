@@ -5,8 +5,9 @@ const hasIdSchema = z.object({ id: z.number() });
 export const createPostSchema = z.object({
     title: z
       .string()
-      .min(3, {
-        message: 'Tytuł musi mieć conajmniej 3 litery',
+      .trim()
+      .min(20, {
+        message: 'Tytuł musi mieć conajmniej 20 liter',
       })
       .max(128, {
         message: 'Tytuł może mieć maksymalnie 128 liter',
