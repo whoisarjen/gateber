@@ -41,7 +41,6 @@ export default async function Home() {
 
   return (
     <div className="flex flex-1 flex-col gap-12">
-      asddasasddas
       <section className="flex items-center flex-col xl:flex-row">
         <div className="flex flex-1 flex-col box-border p-9">
           <h2>Zmonetyzuj swoją wiedze</h2>
