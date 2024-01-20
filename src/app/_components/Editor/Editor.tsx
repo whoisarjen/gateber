@@ -6,12 +6,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { type Post } from '@prisma/client'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import TextareaAutosize from 'react-textarea-autosize'
 import { type CreatePostSchema, createPostSchema } from '~/app/_schemas/posts.schema'
 import { api } from "~/trpc/react";
 import { customRevalidatePath } from '~/app/_utils/cache.utils'
 import { useRouter } from 'next/navigation'
 import { getHrefToPost } from '~/app/_utils/links.utils'
+import { TextareaAutosize } from '@mui/base';
 
 type EditorProps = {
   post?: Post
@@ -41,6 +41,7 @@ export const Editor = ({
     setValue,
     formState: { errors },
   } = useForm<CreatePostSchema>({
+    criteriaMode: "all",
     resolver: zodResolver(createPostSchema),
     defaultValues: {
       title: '',
@@ -138,6 +139,14 @@ export const Editor = ({
 
   return (
     <article className="container mx-auto prose lg:prose-xl">
+      {Object.values(errors).map(({ type, message }) => (
+        <p
+          key={type}
+          className="text-red-500"
+        >
+          {message}
+        </p>
+      ))}
       <form
         id='subreddit-post-form'
         className='w-fit'
