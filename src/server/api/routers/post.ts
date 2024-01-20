@@ -74,7 +74,7 @@ export const postRouter = createTRPCRouter({
   getPosts: publicProcedure
     .input(z.object({
       strona: z.number().min(1).optional().default(1),
-      take: z.number().min(1).optional().default(10),
+      take: z.number().min(1).max(10).optional().default(10),
     }))
     .query(async ({ ctx, input: { take, strona } }) => {
       return await ctx.db.post.findMany({

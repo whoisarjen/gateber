@@ -5,13 +5,13 @@ import EditorJS, { type OutputData } from '@editorjs/editorjs'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type Post } from '@prisma/client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { type CreatePostSchema, createPostSchema } from '~/app/_schemas/posts.schema'
 import { api } from "~/trpc/react";
 import { customRevalidatePath } from '~/app/_utils/cache.utils'
 import { useRouter } from 'next/navigation'
 import { getHrefToPost } from '~/app/_utils/links.utils'
 import { TextareaAutosize } from '@mui/base';
+import { useForm } from "react-hook-form"
 
 type EditorProps = {
   post?: Post
@@ -76,12 +76,10 @@ export const Editor = ({
         },
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post?.id])
 
   useEffect(() => {
     setValue('title', post?.title ?? '')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post?.title])
 
   useEffect(() => {
@@ -139,7 +137,7 @@ export const Editor = ({
 
   return (
     <article className="container mx-auto prose lg:prose-xl">
-      {Object.values(errors).map(({ type, message }) => (
+      {Object.values(errors).map(({ type, message }: any) => (
         <p
           key={type}
           className="text-red-500"
@@ -155,7 +153,7 @@ export const Editor = ({
           Zapisz
         </button>
         <TextareaAutosize
-          ref={(e) => {
+          ref={(e: any) => {
             titleRef(e)
             // @ts-expect-error it's fine, trust me!
             _titleRef.current = e

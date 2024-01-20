@@ -74,7 +74,7 @@ const Section = ({
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  const posts = await api.post.getPosts.query({});
+  const posts = await api.post.getPosts.query({ take: 7 });
 
   const signInOrDashboardHref = session ? '/dashboard' : '/api/auth/signin'
   const signInText = session ? 'Zobacz konto' : 'Zaczynajmy'
