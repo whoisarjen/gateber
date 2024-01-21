@@ -9,7 +9,7 @@ import { env } from "~/env";
 import CreateIcon from '@mui/icons-material/Create';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import GroupIcon from '@mui/icons-material/Group';
-import { getHrefToPost } from './_utils/links.utils';
+import { getHrefToPost } from './_utils/global.utils';
 
 const STEPS = [
   {
@@ -74,7 +74,7 @@ const Section = ({
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  const posts = await api.post.getPosts.query({ take: 7 });
+  const { posts } = await api.post.getPosts.query({ take: 7 });
 
   const signInOrDashboardHref = session ? '/dashboard' : '/api/auth/signin'
   const signInText = session ? 'Zobacz konto' : 'Zaczynajmy'

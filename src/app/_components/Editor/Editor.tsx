@@ -9,7 +9,7 @@ import { type CreatePostSchema, createPostSchema } from '~/app/_schemas/posts.sc
 import { api } from "~/trpc/react";
 import { customRevalidatePath } from '~/app/_utils/cache.utils'
 import { useRouter } from 'next/navigation'
-import { getHrefToPost } from '~/app/_utils/links.utils'
+import { getHrefToPost } from '~/app/_utils/global.utils'
 import { TextareaAutosize } from '@mui/base';
 import { useForm } from "react-hook-form"
 

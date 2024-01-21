@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
 import Image from "next/image";
 import { env } from "~/env";
+import { transformDate } from "~/app/_utils/global.utils";
 
 type PostProps = {
     params: {
@@ -35,7 +36,7 @@ export default async function Post({ params }: PostProps) {
                         {post.user.name}
                     </div>
                     <div>
-                        Ostatnia aktualizacja {new Date(post.updatedAt).toLocaleString('en-GB')}
+                        Ostatnia aktualizacja {transformDate(post.updatedAt)}
                     </div>
                 </div>
             </div>

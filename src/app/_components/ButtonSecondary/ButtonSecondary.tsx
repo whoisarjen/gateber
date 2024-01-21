@@ -11,7 +11,7 @@ export const ButtonSecondary = ({
     ...props
 }: ButtonSecondaryProps) => {
     return (
-        <Link {...props} className={`py-4 px-8 rounded-md bg-secondary text-primary border-none cursor-pointer font-bold no-underline ${className}`}>
+        <Link {...props} className={`py-3 px-6 rounded-md bg-secondary text-primary border-none cursor-pointer font-bold no-underline ${className}`}>
           {children}
         </Link>
     )
