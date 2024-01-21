@@ -11,7 +11,9 @@ import { customRevalidatePath } from '~/app/_utils/cache.utils'
 import { useRouter } from 'next/navigation'
 import { getHrefToPost } from '~/app/_utils/global.utils'
 import { TextareaAutosize } from '@mui/base';
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 type EditorProps = {
   post?: Post
@@ -38,14 +40,15 @@ export const Editor = ({
   const {
     register,
     handleSubmit,
-    setValue,
+    control,
     formState: { errors },
   } = useForm<CreatePostSchema>({
     criteriaMode: "all",
     resolver: zodResolver(createPostSchema),
     defaultValues: {
-      title: '',
-      content: {},
+      title: post?.title ?? '',
+      isPublic: post?.isPublic ?? false,
+      content: (post?.content ?? {}) as unknown as any,
     },
   })
   const ref = useRef<EditorJS>()
@@ -77,10 +80,6 @@ export const Editor = ({
       })
     }
   }, [post?.id])
-
-  useEffect(() => {
-    setValue('title', post?.title ?? '')
-  }, [post?.title])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -149,9 +148,32 @@ export const Editor = ({
         id='subreddit-post-form'
         className='w-fit'
         onSubmit={handleSubmit(onSubmit)}>
-        <button>
-          Zapisz
-        </button>
+          <div className="flex flex-1 justify-between mb-6">
+            <div>
+              <button>
+                Zapisz
+              </button>
+            </div>
+            {!!post &&
+              <div>
+                <Controller
+                  control={control}
+                  name="isPublic"
+                  render={({ field: { onChange, value } }) => (
+                    <FormControlLabel
+                      control={<Switch
+                        checked={value}
+                        onChange={onChange}
+                        color="primary"
+                      />}
+                      label={value ? 'Post opublikowany' : 'Post prywatny'}
+                      labelPlacement="start"
+                    />
+                  )}
+                />
+              </div>
+            }
+          </div>
         <TextareaAutosize
           ref={(e: any) => {
             titleRef(e)

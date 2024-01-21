@@ -43,49 +43,48 @@ export const postRouter = createTRPCRouter({
       });
   }),
 
-    getPost: publicProcedure
-      .input(z.object({ id: z.number().min(1) }))
-      .query(async ({ ctx, input: { id } }) => {
-      return await ctx.db.post.findFirstOrThrow({
-        orderBy: { createdAt: "desc" },
-        include: {
-          user: {
-            select: {
-              name: true,
-              image: true,
-            }
+  getPost: publicProcedure
+    .input(z.object({
+      id: z.number().min(1),
+      isPublic: z.boolean().optional().default(true),
+    }))
+    .query(async ({ ctx, input: { id, isPublic } }) => {
+    return await ctx.db.post.findFirstOrThrow({
+      orderBy: { createdAt: "desc" },
+      include: {
+        user: {
+          select: {
+            name: true,
+            image: true,
+          }
+        },
+      },
+      where: {
+        OR: [
+          {
+            id,
+            isPublic,
           },
-        },
-        where: {
-          OR: [
-            {
-              id,
-              isPublic: true,
-            },
-            {
-              id,
-              userId: ctx.session?.user.id,
-            },
-          ]
-        },
-      });
+          {
+            id,
+            userId: ctx.session?.user.id,
+          },
+        ]
+      },
+    });
   }),
 
-  getPosts: publicProcedure
+  getPostsByUserId: publicProcedure
     .input(z.object({
+      userId: z.string(),
+      isPublic: z.boolean().optional().default(true),
       page: z.number().min(1).optional().default(1),
       take: z.number().min(1).max(10).optional().default(10),
     }))
-    .query(async ({ ctx, input: { take, page } }) => {
+    .query(async ({ ctx, input: { take, page, userId, isPublic } }) => {
       const where = {
-        OR: [
-          {
-            isPublic: true,
-          },
-          {
-            userId: ctx.session?.user.id,
-          },
-        ],
+        isPublic,
+        userId,
       }
 
       const [posts, total] = await ctx.db.$transaction([
@@ -114,4 +113,42 @@ export const postRouter = createTRPCRouter({
         total,
       }
     }),
+
+    getPosts: publicProcedure
+      .input(z.object({
+        isPublic: z.boolean().optional().default(true),
+        page: z.number().min(1).optional().default(1),
+        take: z.number().min(1).max(10).optional().default(10),
+      }))
+      .query(async ({ ctx, input: { take, page, isPublic } }) => {
+        const where = {
+          isPublic,
+        }
+  
+        const [posts, total] = await ctx.db.$transaction([
+          ctx.db.post.findMany({
+            where,
+            orderBy: { createdAt: "desc" },
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                }
+              },
+            },
+            take,
+            skip: take * (page - 1),
+          }),
+          ctx.db.post.count({ where }),
+        ])
+  
+        return {
+          posts,
+          page,
+          take,
+          pageCount: Math.ceil(total / take),
+          total,
+        }
+      }),
 });

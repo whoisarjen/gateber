@@ -13,6 +13,7 @@ export const createPostSchema = z.object({
         message: 'Tytuł może mieć maksymalnie 128 liter',
       }),
     content: z.object({}).catchall(z.any()),
+    isPublic: z.boolean().optional().default(false),
   })
 
 export type CreatePostSchema = z.infer<typeof createPostSchema>
