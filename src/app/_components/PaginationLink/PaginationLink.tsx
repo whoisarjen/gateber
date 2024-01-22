@@ -22,7 +22,7 @@ export const PaginationLink = ({
       count={count}
       renderItem={(item) => (
         <PaginationItem
-          component={(props: any) => <Link {...props} href={`/wpisy${item.page === 1 ? '' : `?strona=${item.page}`}`} />}
+          component={(props: any) => <Link {...props} href={`/posts${item.page === 1 ? '' : `?strona=${item.page}`}`} />}
           {...item}
         />
       )}

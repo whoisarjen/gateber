@@ -139,7 +139,7 @@ export default async function Home() {
       <section>
         <div className="flex justify-between items-center">
           <h2>Czerp Wiedze Od Innych</h2>
-          <ButtonPrimary href="/wpisy">
+          <ButtonPrimary href="/posts">
             Zobacz pozostałe
           </ButtonPrimary>
         </div>

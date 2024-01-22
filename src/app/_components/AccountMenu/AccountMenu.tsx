@@ -33,7 +33,7 @@ export const AccountMenu = () => {
 
   const onAuthorPosts = () => {
     handleClose()
-    router.push(`/autorzy/${session.data?.user.id}`)
+    router.push(`/authors/${session.data?.user.id}`)
   }
 
   const onSignOut = () => {
