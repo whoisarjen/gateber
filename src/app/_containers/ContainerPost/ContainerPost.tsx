@@ -22,7 +22,10 @@ export const ContainerPost = (post: ContainerPostProps) => {
     return (
         <Link href={getHrefToPost(post)} className="text-black no-underline">
             <article>
-                <p>{transformDate(post.updatedAt)}</p>
+                <div className="flex justify-between">
+                    <p>{transformDate(post.updatedAt)}</p>
+                    {!post.isPublic && <p className="text-warning">Prywatny</p>}
+                </div>
                 <h2 className="text-base line-clamp-2">
                     {post.title}
                 </h2>

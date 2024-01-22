@@ -8,6 +8,7 @@ export default {
         primary: '#4f46ba',
         secondary: '#f7f9fb',
         tertiary: "#dddddd",
+        warning: "#FF0000",
       }
     },
   },

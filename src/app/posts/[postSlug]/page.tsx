@@ -6,6 +6,9 @@ import { getServerAuthSession } from "~/server/auth";
 import Image from "next/image";
 import { env } from "~/env";
 import { transformDate } from "~/app/_utils/global.utils";
+import { ContainerPost } from "~/app/_containers/ContainerPost";
+import { CustomDivider } from "~/app/_components/CustomDivider";
+import { Fragment } from "react";
 
 type PostProps = {
     params: {
@@ -14,13 +17,19 @@ type PostProps = {
 }
 
 export default async function Post({ params }: PostProps) {
-    const session = await getServerAuthSession();
-    const post = await api.post.getPost.query({ id: Number(params.postSlug.split('-').at(0)) });
+    const [
+        session,
+        { post, relatedPosts },
+    ] = await Promise.all([
+        getServerAuthSession(),
+        api.post.getPost.query({ id: Number(params.postSlug.split('-').at(0)) }),
+    ])
 
     return (
         <article className="container mx-auto prose lg:prose-xl">
-            {session?.user.id === post.userId && <Link href={`/dashboard/edit/${post.id}`}>Edytuj wpis</Link>}
+            {session?.user.id === post.user.id && <Link href={`/dashboard/edit/${post.id}`}>Edytuj wpis</Link>}
             <h1>{post.title}</h1>
+            {!post.isPublic && <p className="text-warning">Prywatny</p>}
             <div className="flex gap-8 items-center">
                 {post.user.image &&
                     <Image
@@ -41,6 +50,13 @@ export default async function Post({ params }: PostProps) {
                 </div>
             </div>
             <EditorJsRenderer data={post.content as unknown as OutputData} />
+            {!!relatedPosts.length && <CustomDivider />}
+            {relatedPosts.map((post, index) => (
+                <Fragment key={post.id}>
+                    <ContainerPost {...post} />
+                    {index + 1 !== relatedPosts.length && <CustomDivider />}
+                </Fragment>
+            ))}
         </article>
     )
 }

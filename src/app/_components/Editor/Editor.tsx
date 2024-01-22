@@ -25,14 +25,12 @@ export const Editor = ({
   const router = useRouter()
   const createPost = api.post.create.useMutation({
     onSuccess: (post) => {
-      console.log('success', { post })
       router.push(getHrefToPost(post))
     },
   });
 
   const updatePost = api.post.update.useMutation({
     onSuccess: (post) => {
-      console.log('updated', { post })
       router.push(getHrefToPost(post))
     },
   });
@@ -122,6 +120,7 @@ export const Editor = ({
       return
     }
 
+    customRevalidatePath('/dashboard/create')
     createPost.mutate({
       ...data,
       content,
@@ -139,7 +138,7 @@ export const Editor = ({
       {Object.values(errors).map(({ type, message }: any) => (
         <p
           key={type}
-          className="text-red-500"
+          className="text-warning"
         >
           {message}
         </p>
@@ -166,7 +165,7 @@ export const Editor = ({
                         onChange={onChange}
                         color="primary"
                       />}
-                      label={value ? 'Post opublikowany' : 'Post prywatny'}
+                      label={value ? 'Publiczny' : 'Prywatny'}
                       labelPlacement="start"
                     />
                   )}

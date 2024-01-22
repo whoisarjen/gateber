@@ -5,6 +5,10 @@ export const getHrefToPost = ({ id, title }: Post): string => {
     return `/posts/${slugify(`${id}-${title}`)}`
 }
 
+export const getDateLocaleString = (date = new Date()) => {
+    return new Date(date).toLocaleString('en-GB')
+}
+
 export const transformDate = (date: Date) => {
-    return new Date(date).toLocaleString('en-GB').replaceAll('/', '.')
+    return getDateLocaleString(date).replaceAll('/', '.')
 }

@@ -1,9 +1,10 @@
 import { api } from "~/trpc/server";
 import { ContainerRightSidebar } from "~/app/_containers/ContainerRightSidebar";
-import { Divider } from "~/app/_components/Divider";
+import { CustomDivider } from "~/app/_components/CustomDivider";
 import { Fragment } from "react";
 import { ContainerPost } from "~/app/_containers/ContainerPost";
 import { PaginationLink } from "~/app/_components/PaginationLink";
+import { getServerAuthSession } from "~/server/auth";
 
 type UserIdProps = {
     params: {
@@ -22,7 +23,8 @@ export default async function AuthorUserId ({
         userId,
     },
 }: UserIdProps) {
-    const { posts, pageCount } = await api.post.getPostsByUserId.query({ page: Number(strona), userId });
+    const session = await getServerAuthSession()
+    const { posts, pageCount } = await api.post.getPostsByUserId.query({ page: Number(strona), userId, isPublicOnly: !(session?.user.id === userId) });
 
     return (
         <ContainerRightSidebar>
@@ -30,7 +32,7 @@ export default async function AuthorUserId ({
                 {posts.map((post, index) => (
                     <Fragment key={post.id}>
                         <ContainerPost {...post} />
-                        {index + 1 !== posts.length && <Divider />}
+                        {index + 1 !== posts.length && <CustomDivider />}
                     </Fragment>
                 ))}
                 <div className="flex flex-1 justify-center mt-8">
