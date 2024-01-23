@@ -147,7 +147,7 @@ export default async function Home() {
           <div className="flex flex-1 items-center gap-9 flex-col lg:flex-row">
             {posts.slice(0, 2).map(post => (
               <Link key={post.id} href={getHrefToPost(post)} className="no-underline text-black	flex flex-1 flex-col w-full h-full">
-                <div className="flex relative flex-1 h-full">
+                <div className="flex relative flex-1 h-full min-h-64">
                   <Image
                     src="/images/talking-people.jpg"
                     fill
@@ -157,7 +157,7 @@ export default async function Home() {
                     objectPosition='top'
                   />
                 </div>
-                <h3 className="text-base font-normal line-clamp-2">{post.title}</h3>
+                <h3 className="text-base font-normal line-clamp-2 min-h-12">{post.title}</h3>
               </Link>
             ))}
           </div>
