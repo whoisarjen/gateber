@@ -161,17 +161,19 @@ export default async function Home() {
               </Link>
             ))}
           </div>
-          <div>
-            {posts.slice(2).map((post, index) => (
-              <Link
-                key={post.id}
-                href={getHrefToPost(post)}
-                className={`no-underline text-black flex lg:max-w-96 items-center ${index !== 0 ? 'border-solid border-x-0 border-b-0 border-t-[1px] border-tertiary' : ''}`}
-              >
-                <h3 className="text-base font-normal line-clamp-2">{post.title}</h3>
-              </Link>
-            ))}
-          </div>
+          {!!posts.slice(2).length &&
+            <div>
+              {posts.slice(2).map((post, index) => (
+                <Link
+                  key={post.id}
+                  href={getHrefToPost(post)}
+                  className={`no-underline text-black flex lg:max-w-96 items-center ${index !== 0 ? 'border-solid border-x-0 border-b-0 border-t-[1px] border-tertiary' : ''}`}
+                >
+                  <h3 className="text-base font-normal line-clamp-2">{post.title}</h3>
+                </Link>
+              ))}
+            </div>
+          }
         </div>
       </section>
       <section className="hidden lg:flex flex-1 min-h-[512px] relative">

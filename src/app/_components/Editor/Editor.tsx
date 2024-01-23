@@ -25,7 +25,7 @@ export const Editor = ({
   const router = useRouter()
   const createPost = api.post.create.useMutation({
     onSuccess: (post) => {
-      router.push(getHrefToPost(post))
+      router.push(`/dashboard/edit/${post.id}`)
     },
   });
 

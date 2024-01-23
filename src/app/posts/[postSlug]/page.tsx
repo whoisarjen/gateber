@@ -9,10 +9,21 @@ import { transformDate } from "~/app/_utils/global.utils";
 import { ContainerPost } from "~/app/_containers/ContainerPost";
 import { CustomDivider } from "~/app/_components/CustomDivider";
 import { Fragment } from "react";
+import type { Metadata } from 'next'
 
 type PostProps = {
     params: {
         postSlug: string
+    }
+}
+
+export async function generateMetadata({
+    params,
+}: PostProps): Promise<Metadata> {
+    const { post } = await api.post.getPost.query({ id: Number(params.postSlug.split('-').at(0)) })
+   
+    return {
+        title: post.title,
     }
 }
 
