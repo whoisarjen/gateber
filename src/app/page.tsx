@@ -120,8 +120,8 @@ export default async function Home() {
         </ButtonPrimary>
       </Section>
       <Section
-        header="Przejrzyste Zasady, Zero Niespodzianek"
-        description={`${env.SITE_NAME} to miejsce, gdzie klarowność to priorytet. Cała nasza platforma jest dostępna dla Ciebie bez żadnych opłat - twórz, buduj społeczność, zarabiaj, wszystko bezpłatnie.`}
+        header="Natychmiastowy Zasięg, Bez Czekania na SEO"
+        description={`Zapomnij o czekaniu na długoletnie efekty SEO! Wybierz ${env.SITE_NAME} i zanurz się w natychmiastowym zasięgu. Już teraz dotrzyj do użytkowników, którzy poszukują treści takiej jak Twoja. Bez opóźnień, bez niekończącego się oczekiwania.`}
       >
         <ButtonPrimary href={signInOrDashboardHref}>
           {signInText}
