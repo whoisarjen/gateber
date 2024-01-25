@@ -14,7 +14,7 @@ export const followerRouter = createTRPCRouter({
         return await ctx.db.follower.findFirst({
             where: {
                 userId,
-                followerId: ctx.session.user.id,
+                authorId: ctx.session.user.id,
             },
         });
     })

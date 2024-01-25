@@ -93,7 +93,7 @@ model User {
     sessions            Session[]
     posts               Post[]
     followers           Follower[] @relation("followers")
-    authors            Follower[] @relation("authors")
+    authors             Follower[] @relation("authors")
     createdAt           DateTime   @default(now())
     updatedAt           DateTime   @default(now()) @updatedAt
 }
