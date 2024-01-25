@@ -43,23 +43,19 @@ export const AccountMenu = () => {
     router.push('/api/auth/signout')
   }
 
-  const handleOnNotification = () => {
-    router.push('/notifications')
-  }
-
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Typography
-          sx={{ minWidth: 100 }}
           onClick={() => router.push('/dashboard/create')}
+          className="primary-button"
         >
           Dodaj wpis
         </Typography>
         <IconButton
           size="small"
           sx={{ ml: 2 }}
-          onClick={handleOnNotification}
+          onClick={() => router.push('/notifications')}
         >
           <Badge badgeContent={session.data?.user.notificationsNumber ?? 0} color="primary">
             <NotificationsNoneIcon />
