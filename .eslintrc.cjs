@@ -18,6 +18,7 @@ const config = {
     "@typescript-eslint/no-unsafe-argument": "off",
     "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/prefer-optional-chain": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/consistent-type-imports": [
