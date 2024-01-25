@@ -10,7 +10,7 @@ export default async function Notifications () {
 
     return (
         <div>
-            Brak nowych powiadomień
+            Brak nowych powiadomień.
         </div>
     )
 }
