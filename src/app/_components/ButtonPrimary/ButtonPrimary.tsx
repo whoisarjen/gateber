@@ -11,7 +11,7 @@ export const ButtonPrimary = ({
     ...props
 }: ButtonPrimaryProps) => {
     return (
-        <Link {...props} className={`shadow py-3 px-6 rounded-md bg-primary text-white border-none cursor-pointer font-bold no-underline ${className}`}>
+        <Link {...props} className={`primary-button ${className}`}>
           {children}
         </Link>
     )

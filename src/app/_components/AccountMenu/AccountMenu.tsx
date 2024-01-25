@@ -12,6 +12,8 @@ import Logout from '@mui/icons-material/Logout';
 import { useSession } from "next-auth/react";
 import { useState, type MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from '@mui/material/Badge';
 
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -41,6 +43,10 @@ export const AccountMenu = () => {
     router.push('/api/auth/signout')
   }
 
+  const handleOnNotification = () => {
+    router.push('/notifications')
+  }
+
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -50,6 +56,14 @@ export const AccountMenu = () => {
         >
           Dodaj wpis
         </Typography>
+        <IconButton
+          size="small"
+          sx={{ ml: 2 }}
+        >
+          <Badge badgeContent={0} color="primary" onClick={handleOnNotification}>
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
         <IconButton
           onClick={handleClick}
           size="small"

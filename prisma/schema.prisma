@@ -30,6 +30,24 @@ model Post {
     @@index([userId])
 }
 
+model Follower {
+    id        Int      @id @default(autoincrement())
+    isPushNotification Boolean @default(true)
+    isEmailNotification Boolean @default(true)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt @default(now())
+
+    user      User     @relation("following", fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+
+    follower  User     @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+    followerId String @unique
+
+    @@index([userId, followerId])
+    @@unique([userId, followerId])
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -73,6 +91,8 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    following   Follower[]   @relation("following")
+    followers   Follower[]  @relation("followers")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt @default(now())
 }

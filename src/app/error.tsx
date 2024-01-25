@@ -1,6 +1,7 @@
 'use client'
  
-import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { env } from "~/env";
 
 type ErrorProps = {
     error: Error & {
@@ -14,9 +15,12 @@ export default function Error({
   error,
   reset,
 }: ErrorProps) {
-    useEffect(() => {
-        console.log({ error })
-    }, [error])
+    const router = useRouter()
+
+    if (error.message.includes(env.NEXT_PUBLIC_NOT_AUTHENTICATED_ERROR_MESSAGE)) {
+        router.push('/api/auth/signin')
+        return null
+    }
 
     return (
         <div className="container mx-auto flex flex-col items-center">

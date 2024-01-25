@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { ContainerPost } from "~/app/_containers/ContainerPost";
 import { PaginationLink } from "~/app/_components/PaginationLink";
 import { getServerAuthSession } from "~/server/auth";
+import { FollowButton } from "~/app/_components/FollowButton";
 
 type UserIdProps = {
     params: {
@@ -24,10 +25,16 @@ export default async function AuthorUserId ({
     },
 }: UserIdProps) {
     const session = await getServerAuthSession()
-    const { posts, pageCount } = await api.post.getPostsByUserId.query({ page: Number(strona), userId, isPublicOnly: !(session?.user.id === userId) });
+    const { posts, pageCount } = await api.post.getPostsByUserId.query({ page: Number(strona), userId, isPublicOnly: !(session?.user.id === userId) })
 
     return (
-        <ContainerRightSidebar>
+        <ContainerRightSidebar
+            sidebarContent={
+                <div>
+                    <FollowButton userId={userId} />
+                </div>
+            }
+        >
             <div className="flex flex-1 flex-col box-border px-8">
                 {posts.map((post, index) => (
                     <Fragment key={post.id}>

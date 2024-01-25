@@ -3,6 +3,9 @@
     a {
       @apply text-indigo-700;
     }
+    .primary-button {
+      @apply shadow py-3 px-6 rounded-md bg-primary text-white border-none cursor-pointer font-bold no-underline
+    }
 }
 @tailwind components;
 @tailwind utilities;

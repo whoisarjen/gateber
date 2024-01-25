@@ -32,6 +32,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     LIMIT_CREATE_POSTS_PER_DAY: z.number().optional().default(10),
+    NOT_AUTHENTICATED_ERROR_MESSAGE: z.string().optional().default('You need to be authenticated'),
   },
 
   /**
@@ -40,7 +41,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_NOT_AUTHENTICATED_ERROR_MESSAGE: z.string().optional().default('You need to be authenticated'),
   },
 
   /**
@@ -56,6 +57,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     LIMIT_CREATE_POSTS_PER_DAY: process.env.LIMIT_CREATE_POSTS_PER_DAY,
+    NOT_AUTHENTICATED_ERROR_MESSAGE: process.env.NOT_AUTHENTICATED_ERROR_MESSAGE,
+    NEXT_PUBLIC_NOT_AUTHENTICATED_ERROR_MESSAGE: process.env.NOT_AUTHENTICATED_ERROR_MESSAGE,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
