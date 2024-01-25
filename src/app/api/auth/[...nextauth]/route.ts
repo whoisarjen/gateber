@@ -7,6 +7,12 @@ const handler = NextAuth({
     ...authOptions,
     callbacks: {
         ...authOptions.callbacks,
+        async session({ session, user }) {
+          return {
+            ...session,
+            user,
+          }
+        },
         async redirect() {
             return '/'
         },

@@ -12,7 +12,7 @@ import Logout from '@mui/icons-material/Logout';
 import { useSession } from "next-auth/react";
 import { useState, type MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import Badge from '@mui/material/Badge';
 
 export const AccountMenu = () => {
@@ -59,9 +59,10 @@ export const AccountMenu = () => {
         <IconButton
           size="small"
           sx={{ ml: 2 }}
+          onClick={handleOnNotification}
         >
-          <Badge badgeContent={0} color="primary" onClick={handleOnNotification}>
-            <NotificationsIcon />
+          <Badge badgeContent={session.data?.user.notificationsNumber ?? 0} color="primary">
+            <NotificationsNoneIcon />
           </Badge>
         </IconButton>
         <IconButton

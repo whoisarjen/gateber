@@ -88,8 +88,8 @@ export default async function Home() {
         <ButtonPrimary href={signInOrDashboardHref}>
           {signInText}
         </ButtonPrimary>
-        <ButtonSecondary href="/blog">
-          Czytaj dalej
+        <ButtonSecondary href="/posts">
+          Zacznij czytać
         </ButtonSecondary>
       </Section>
       <section className="flex flex-1 flex-col text-center">
