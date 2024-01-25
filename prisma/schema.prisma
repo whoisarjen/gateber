@@ -48,6 +48,24 @@ model Follower {
     @@index([userId, authorId])
 }
 
+model Comment {
+    id      Int    @id @default(autoincrement())
+    comment String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+
+    parent   Comment?  @relation("comments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    parentId Int?      @unique
+    children Comment[] @relation("comments")
+
+    @@index([userId])
+    @@index([parentId])
+}
+
 // Necessary for Next auth
 model Account {
     id                String   @id @default(cuid())
@@ -94,6 +112,7 @@ model User {
     posts               Post[]
     followers           Follower[] @relation("followers")
     authors             Follower[] @relation("authors")
+    comments            Comment[]
     createdAt           DateTime   @default(now())
     updatedAt           DateTime   @default(now()) @updatedAt
 }
